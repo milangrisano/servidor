@@ -27,22 +27,16 @@ docker compose up -d
 
 ## Rutas / volúmenes
 
-Se derivan de la variable **`PATH_TO_DATA`** (se concatena igual que el resto de
-los compose del servidor). En `rclone/.env` se define:
+Siguen la convención del plugin de docker del servidor, con **dos carpetas base
+de propósito distinto** (desde `rclone/.env`):
 
-```yaml
-volumes:
-  - ${PATH_TO_DATA}/rclone/config:/config
-  - ${PATH_TO_DATA}/rclone:/data
-```
-
-| Ruta (host) | Dentro del contenedor | Uso |
+| Variable | Propósito | Uso en rclone |
 |---|---|---|
-| `${PATH_TO_DATA}/rclone/config` | `/config` | `rclone.conf` (remotes, persistente) |
-| `${PATH_TO_DATA}/rclone` | `/data` | datos/archivos |
+| `PATH_TO_APPDATA` | **Configuración** de los servicios | `${PATH_TO_APPDATA}/rclone/config` → `/config` (`rclone.conf`, remotes) |
+| `PATH_TO_DATA` | **Datos** que guardan/generan las apps | `${PATH_TO_DATA}/rclone` → `/data` (archivos, montajes) |
 
-En hpserver (test) el valor está en el `.env`; en Lenovo/OMV es la **variable
-global OMV** que apunta al disco físico (p. ej. `/srv/dev-disk-...`).
+En hpserver (test) los valores van en el `.env`; en Lenovo/OMV son **variables
+globales OMV** que apuntan al disco físico.
 
 ## Seguridad (producción)
 

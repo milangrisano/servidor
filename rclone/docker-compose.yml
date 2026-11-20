@@ -16,7 +16,7 @@ services:
     environment:
       - RCLONE_CONFIG=/config/rclone.conf
     volumes:
-      - ${PATH_TO_DATA}/rclone/config:/config
+      # Configuración (rclone.conf, remotes) → PATH_TO_APPDATA
+      - ${PATH_TO_APPDATA}/rclone/config:/config
+      # Datos (archivos que rclone maneja, montas) → PATH_TO_DATA
       - ${PATH_TO_DATA}/rclone:/data
-    # Ruta derivada de la variable global PATH_TO_DATA (igual que los demás compose):
-    # en Lenovo/OMV PATH_TO_DATA apunta al disco físico del host.
