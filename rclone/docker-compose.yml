@@ -1,0 +1,22 @@
+services:
+  rclone:
+    image: rclone/rclone:latest
+    container_name: rclone-webgui
+    restart: unless-stopped
+    command: >
+      gui
+      --addr :5572
+      --api-addr :5573
+      --user ${RC_USER:-admin}
+      --pass ${RC_PASS:-rclone123}
+      --no-open-browser
+    ports:
+      - "5572:5572"
+      - "5573:5573"
+    environment:
+      - RCLONE_CONFIG=/config/rclone.conf
+    volumes:
+      - /opt/data/rclone/config:/config
+      - /opt/data/rclone:/data
+    # NOTA: adaptar las rutas /opt/data/rclone a las del host real
+    # (en Lenovo/OMV usar la ruta del disco físico, p. ej. /srv/dev-disk-.../rclone)
